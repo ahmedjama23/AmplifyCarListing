@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>List a car</title>
+    <style>
+        body {
+            background-color: #003b5e;
+        }
+
+        label,
+        button {
+            color: #999999;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 40px;
+        }
+
+        input {
+            color: #232F3E;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        function loadOptions() {
+            let currentYear = new Date(Date.now()).getFullYear();
+            let select = document.getElementById("modelYear");
+
+            for (let i = 1940; i < currentYear; i++) {
+                let option = document.createElement("option");
+                option.setAttribute("value", i);
+                option.innerText = { i };
+                select.appendChild(option);
+
+            }
+        }
+        window.onload = loadOptions();
+
+
+        var callAPI = (modelYear, make, model) => {
+
+            var myHeaders = new Headers();
+
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({ "Model Year": modelYear, "Make": make, "Model": model });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("https://yi6fltl8h2.execute-api.us-west-2.amazonaws.com/dev", requestOptions)
+                .then(response => response.text())
+                .then(result => alert(JSON.parse(result).body))
+                .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <label>Model Year:</label>
+        <select id="modelYear">
+            <script>
+
+                let currentYear = new Date(Date.now()).getFullYear();
+                let select = document.getElementById("modelYear");
+                debugger;
+                for (let i = currentYear+1; i >= 1940; i--) {
+                    let option = document.createElement("option");
+                    option.setAttribute("value", i);
+                    option.innerText = i;
+                    select.appendChild(option);
+                }
+
+            </script>
+        </select>
+        <label>Make:</label>
+        <input type="text" id="make">
+        <label>Model:</label>
+        <input type="text" id="model">
+
+        <button type="button"
+            onclick="callAPI(document.getElementById('modelYear').value,document.getElementById('make').value,document.getElementById('model').value)">Call
+            API</button>
+    </form>
+</body>
+
+</html>
