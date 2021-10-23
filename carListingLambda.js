@@ -11,12 +11,7 @@ let now = date.toISOString();
 exports.handler = async (event) => {
     // Extract values from event and format as strings
     let listResponse = JSON.stringify(`New Car Listed: ${event.modelYear} ${event.make} ${event.model}`);
-    let queryParams = {
-        TableName:'listedCars',
-        AttributesToGet: 'carID'
-    };
-    let carID = await dynamodb.get(params).promise();
-    debugger;
+
     // Create JSON object with parameters for DynamoDB and store in a variable
     let params = {
         TableName:'listedCars',

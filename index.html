@@ -25,28 +25,13 @@
         }
     </style>
     <script>
-        function loadOptions() {
-            let currentYear = new Date(Date.now()).getFullYear();
-            let select = document.getElementById("modelYear");
-
-            for (let i = 1940; i < currentYear; i++) {
-                let option = document.createElement("option");
-                option.setAttribute("value", i);
-                option.innerText = { i };
-                select.appendChild(option);
-
-            }
-        }
-        window.onload = loadOptions();
-
-
         var callAPI = (modelYear, make, model) => {
 
             var myHeaders = new Headers();
 
             myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify({ "Model Year": modelYear, "Make": make, "Model": model });
+            var raw = JSON.stringify({'modelYear':modelYear,'make':make,'model':model});
 
             var requestOptions = {
                 method: 'POST',
@@ -55,10 +40,10 @@
                 redirect: 'follow'
             };
 
-            fetch("https://yi6fltl8h2.execute-api.us-west-2.amazonaws.com/dev", requestOptions)
-                .then(response => response.text())
-                .then(result => alert(JSON.parse(result).body))
-                .catch(error => console.log('error', error));
+            fetch("https://779vd6zdz6.execute-api.us-west-2.amazonaws.com/dev", requestOptions)
+                .then(response => {response.text()})
+                // .then(result => alert(JSON.parse(result).body))
+                .catch(error => {console.log('error', error)});
         }
     </script>
 </head>
